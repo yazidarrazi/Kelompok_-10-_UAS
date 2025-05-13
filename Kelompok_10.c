@@ -258,3 +258,54 @@ void editWattPerangkat(DaftarPerangkat daftar[], int jumlah_daftar) {
             }
 
             ditemukan = 1;
+            break;
+        }
+    }
+
+    if (!ditemukan) {
+        printf("Perangkat dengan nama '%s' tidak ditemukan.\n", nama);
+    }
+}
+
+
+// Main Program
+int main() {
+    DaftarPerangkat daftar[MAX_PERANGKAT] = {
+        {"AC", 10}, {"Kulkas", 2}, {"TV", 2}, {"Laptop", 1},
+        {"Mesin Cuci", 8}, {"Dispenser", 5}, {"Lampu", 1}, {"Rice Cooker", 7},
+        {"Setrika", 5}, {"Pompa Air", 4}, {"Kompor Listrik", 17}, {"Microwave", 13},
+        {"CCTV", 1}, {"Kipas Angin", 2}, {"Vacuum Cleaner", 10}
+    };
+    int jumlah_daftar = 15;
+    PerangkatAktif aktif[MAX_STACK];
+    Stack stack, rekomendasi;
+    Node* riwayat = NULL;
+    int jumlah_aktif = 0, menu;
+    int target = 0;
+    char input[50];
+    char hari[15];
+
+    initStack(&stack);
+    initStack(&rekomendasi);
+
+    do {
+        printf("\n=== MENU UTAMA ===\n");
+        printf("1. Rekomendasi Penghematan Listrik\n");
+        printf("2. Tampilkan Riwayat Konsumsi\n");
+        printf("3. Cari Perangkat dengan Konsumsi di Atas Batas\n");
+        printf("4. Tambah Perangkat ke Daftar\n");
+        printf("5. Edit Watt Perangkat\n");
+        printf("6. Keluar\n");
+        printf("Pilih menu: ");
+        scanf("%d", &menu);
+        getchar(); 
+
+        switch (menu) {
+            case 1: {
+                jumlah_aktif = 0;
+                int total = 0;
+
+                printf("\nDaftar Perangkat:\n");
+                for (int i = 0; i < jumlah_daftar; i++) {
+                    printf("%d. %s (%d watt/menit)\n", i + 1, daftar[i].nama, daftar[i].watt_per_menit);
+                }
