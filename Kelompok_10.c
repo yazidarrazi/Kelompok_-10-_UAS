@@ -413,3 +413,4 @@ tambahRiwayat(&riwayat, total, hari);
 
     hapusRiwayat(riwayat);
     return 0;
+}
