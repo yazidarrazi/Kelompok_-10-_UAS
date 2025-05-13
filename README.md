@@ -10,3 +10,6 @@ Anggota Kelompok 10:
 
 ENERGY CONSUMPTION OPTIMIZER (ECO)
  Sistem Manajemen Konsumsi Daya Listrik Rumah Tangga Berbasis Bahasa C
+
+Deskripsi Singkat Proyek
+Proyek ini mengembangkan sebuah sistem manajemen energi berbasis bahasa C yang digunakan untuk mencatat, memantau, dan mengelola konsumsi daya listrik perangkat elektronik di lingkungan rumah tangga. Sistem ini dilengkapi fitur pencatatan harian, pelaporan histori penggunaan, dan saran penghematan energi, guna mendorong efisiensi penggunaan listrik dan kesadaran energi di rumah.
