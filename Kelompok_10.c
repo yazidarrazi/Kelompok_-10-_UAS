@@ -154,3 +154,55 @@ void tampilkanTabelKonsumsi(PerangkatAktif arr[], int n) {
 // Linear Search
 void cariPerangkatKonsumsiTinggi(PerangkatAktif arr[], int n, int batas) {
     printf("\nPerangkat dengan konsumsi lebih dari %d watt:\n", batas);
+    int ditemukan = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i].total_konsumsi > batas) {
+            printf("- %s (%d watt)\n", arr[i].nama, arr[i].total_konsumsi);
+            ditemukan = 1;
+        }
+    }
+    if (!ditemukan) {
+        printf("Tidak ada perangkat dengan konsumsi melebihi %d watt.\n", batas);
+    }
+}
+
+// Tambah perangkat baru
+void tambahPerangkat(DaftarPerangkat daftar[], int* jumlah_daftar) {
+    if (*jumlah_daftar >= MAX_PERANGKAT) {
+        printf("Daftar perangkat penuh.\n");
+        return;
+    }
+    char nama[30];
+    int watt;
+    int ditemukan = 0;
+
+    printf("Masukkan nama perangkat baru: ");
+    scanf("%s", nama);
+
+    for (int i = 0; i < *jumlah_daftar; i++) {
+        if (strcasecmp(daftar[i].nama, nama) == 0) {
+            printf("Perangkat dengan nama '%s' sudah ada di daftar.\n", nama);
+            ditemukan = 1;
+            break;
+        }
+    }
+
+    if (ditemukan) {
+        char pilihan;
+        int valid = 0;
+        do {
+            printf("Apakah Anda ingin mengedit watt perangkat ini? (y/n): ");
+            scanf(" %c", &pilihan);
+            
+            while(getchar() != '\n');
+            
+            pilihan = tolower(pilihan);
+            if (pilihan == 'y' || pilihan == 'n') {
+                valid = 1;
+            } else {
+                printf("Input tidak valid. Harap masukkan 'y' atau 'n'.\n");
+            }
+        } while (!valid);
+
+        if (pilihan == 'y') {
+            printf("Masukkan watt baru perangkat '%s': ", nama);
