@@ -309,3 +309,56 @@ int main() {
                 for (int i = 0; i < jumlah_daftar; i++) {
                     printf("%d. %s (%d watt/menit)\n", i + 1, daftar[i].nama, daftar[i].watt_per_menit);
                 }
+
+                int pilihan;
+                while (1) {
+                    printf("\nMasukkan pilihan perangkat (1-%d) atau '0' untuk selesai: ", jumlah_daftar);
+                    fgets(input, sizeof(input), stdin);
+                    if (sscanf(input, "%d", &pilihan) != 1 || pilihan < 0 || pilihan > jumlah_daftar) {
+                        printf("Pilihan tidak valid.\n");
+                        continue;
+                    }
+                    if (pilihan == 0) break;
+
+                    DaftarPerangkat* p = &daftar[pilihan - 1];
+                    int durasi;
+                    printf("Durasi penggunaan (menit): ");
+                    scanf("%d", &durasi);
+                    getchar(); 
+
+                    PerangkatAktif aktifPerangkat;
+                    strcpy(aktifPerangkat.nama, p->nama);
+                    aktifPerangkat.watt_per_menit = p->watt_per_menit;
+                    aktifPerangkat.durasi = durasi;
+                    aktifPerangkat.total_konsumsi = durasi * p->watt_per_menit;
+
+                    aktif[jumlah_aktif++] = aktifPerangkat;
+                    total += aktifPerangkat.total_konsumsi;
+                }
+
+                printf("Masukkan hari penggunaan (format: DD-MM-YYYY): ");
+int day, month, year;
+while (1) {
+    if (scanf("%d-%d-%d", &day, &month, &year) != 3) {
+        printf("Format tidak valid. Silahkan masukkan tanggal (DD-MM-YYYY): ");
+       
+        while (getchar() != '\n');
+        continue;
+    }
+    
+    // Validasi tanggal
+    if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > 2100) {
+        printf("Tanggal tidak valid. Silahkan masukkan tanggal yang benar (DD-MM-YYYY): ");
+        continue;
+    }
+
+    snprintf(hari, sizeof(hari), "%02d-%02d-%04d", day, month, year);
+    break;
+}
+getchar(); 
+tambahRiwayat(&riwayat, total, hari);
+
+                printf("\nTotal Konsumsi: %d watt\n", total);
+                printf("Target Penghematan (watt): ");
+                scanf("%d", &target);
+                getchar(); 
