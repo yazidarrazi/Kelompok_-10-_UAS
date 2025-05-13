@@ -102,3 +102,55 @@ void merge(PerangkatAktif arr[], int l, int m, int r) {
 
     for (int i = 0; i < n1; i++) L[i] = arr[l + i];
     for (int j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2) {
+        if (L[i].total_konsumsi >= R[j].total_konsumsi)
+            arr[k++] = L[i++];
+        else
+            arr[k++] = R[j++];
+    }
+
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}
+
+void mergeSort(PerangkatAktif arr[], int l, int r) {
+    if (l < r) {
+        int m = (l + r) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+// Greedy
+int greedyOptimisasi(PerangkatAktif perangkat[], int n, int target, Stack* stack) {
+    int penghematan = 0;
+    printf("\nPengurangan Pemakaian Perangkat untuk Mencapai Target Penghematan:\n");
+
+    for (int i = 0; i < n && penghematan < target; i++) {
+        int pengurangan_watt = perangkat[i].total_konsumsi;
+        int pengurangan_durasi = (pengurangan_watt > target - penghematan) ? (target - penghematan) / perangkat[i].watt_per_menit : perangkat[i].durasi;
+
+        int dikurang = perangkat[i].watt_per_menit * pengurangan_durasi;
+        printf("- %s: Pengurangan durasi %d menit (Pengurangan konsumsi: %d watt)\n", perangkat[i].nama, pengurangan_durasi, dikurang);
+
+        penghematan += dikurang;
+        push(stack, perangkat[i].nama, dikurang);
+    }
+
+    return penghematan;
+}
+
+void tampilkanTabelKonsumsi(PerangkatAktif arr[], int n) {
+    printf("\n%-20s %-15s %-15s %-20s\n", "Nama Perangkat", "Durasi (menit)", "Watt/menit", "Total Konsumsi");
+    printf("-------------------------------------------------------------------------------\n");
+    for (int i = 0; i < n; i++) {
+        printf("%-20s %-15d %-15d %-20d\n", arr[i].nama, arr[i].durasi, arr[i].watt_per_menit, arr[i].total_konsumsi);
+    }
+}
+
+// Linear Search
+void cariPerangkatKonsumsiTinggi(PerangkatAktif arr[], int n, int batas) {
+    printf("\nPerangkat dengan konsumsi lebih dari %d watt:\n", batas);
