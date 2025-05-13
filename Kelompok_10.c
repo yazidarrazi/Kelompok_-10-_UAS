@@ -410,3 +410,5 @@ tambahRiwayat(&riwayat, total, hari);
                 break;
         }
     } while (menu != 6);
+
+    hapusRiwayat(riwayat);
