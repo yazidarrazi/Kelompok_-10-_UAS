@@ -362,3 +362,51 @@ tambahRiwayat(&riwayat, total, hari);
                 printf("Target Penghematan (watt): ");
                 scanf("%d", &target);
                 getchar(); 
+
+                mergeSort(aktif, 0, jumlah_aktif - 1);
+                tampilkanTabelKonsumsi(aktif, jumlah_aktif);
+                int total_hemat = greedyOptimisasi(aktif, jumlah_aktif, target, &rekomendasi);
+
+                printf("\nTotal penghematan yang bisa dilakukan: %d watt\n", total_hemat);
+                tampilkanStack(&rekomendasi);
+                break;
+            }
+
+            case 2:
+                tampilkanRiwayat(riwayat);
+                break;
+            
+            case 3: {
+                int batas;
+                int valid = 0;
+                char input[50];
+
+                do {
+                    printf("Masukkan batas konsumsi watt: ");
+                    fgets(input, sizeof(input), stdin);
+        
+                if (sscanf(input, "%d", &batas) == 1) {
+                    valid = 1;
+                } else {
+                    printf("Input tidak valid. Harap masukkan angka.\n");
+                }
+                } while (!valid);
+    
+                 cariPerangkatKonsumsiTinggi(aktif, jumlah_aktif, batas);
+                 break;
+            }
+    
+            case 4:
+                tambahPerangkat(daftar, &jumlah_daftar);
+                break;
+            case 5:
+                editWattPerangkat(daftar, jumlah_daftar);
+                break;
+            case 6:
+                printf("Terima kasih. Program selesai.\n");
+                break;
+            default:
+                printf("Pilihan tidak valid.\n");
+                break;
+        }
+    } while (menu != 6);
