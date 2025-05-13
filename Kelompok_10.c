@@ -412,3 +412,4 @@ tambahRiwayat(&riwayat, total, hari);
     } while (menu != 6);
 
     hapusRiwayat(riwayat);
+    return 0;
