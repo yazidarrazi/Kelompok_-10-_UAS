@@ -206,3 +206,55 @@ void tambahPerangkat(DaftarPerangkat daftar[], int* jumlah_daftar) {
 
         if (pilihan == 'y') {
             printf("Masukkan watt baru perangkat '%s': ", nama);
+            scanf("%d", &watt);
+            for (int i = 0; i < *jumlah_daftar; i++) {
+                if (strcasecmp(daftar[i].nama, nama) == 0) {
+                    daftar[i].watt_per_menit = watt;
+                    printf("Watt perangkat '%s' berhasil diubah menjadi %d watt/menit.\n", nama, watt);
+                    break;
+                }
+            }
+        }
+    } else {
+        printf("Masukkan konsumsi watt/menit perangkat tersebut: ");
+        scanf("%d", &watt);
+        strcpy(daftar[*jumlah_daftar].nama, nama);
+        daftar[*jumlah_daftar].watt_per_menit = watt;
+        (*jumlah_daftar)++;
+        printf("Perangkat '%s' berhasil ditambahkan.\n", nama);
+    }
+}
+
+void editWattPerangkat(DaftarPerangkat daftar[], int jumlah_daftar) {
+    char nama[30];
+    char input[100];
+    int watt_baru;
+    int ditemukan = 0;
+
+    printf("Masukkan nama perangkat yang ingin diubah watt-nya: ");
+    scanf("%s", nama);
+
+    for (int i = 0; i < jumlah_daftar; i++) {
+        if (strcasecmp(daftar[i].nama, nama) == 0) {
+            printf("Perangkat '%s' ditemukan.\n", daftar[i].nama);
+            printf("Watt saat ini: %d watt/menit\n", daftar[i].watt_per_menit);
+
+            int valid = 0;
+            while (!valid) {
+                printf("Masukkan watt baru perangkat '%s': ", daftar[i].nama);
+                fgets(input, sizeof(input), stdin);  
+
+                if (input[0] == '\n') {
+                    fgets(input, sizeof(input), stdin);
+                }
+
+                if (sscanf(input, "%d", &watt_baru) == 1 && watt_baru > 0) {
+                    valid = 1;
+                    daftar[i].watt_per_menit = watt_baru;
+                    printf("Watt perangkat '%s' berhasil diubah menjadi %d watt/menit.\n", daftar[i].nama, watt_baru);
+                } else {
+                    printf("Input tidak valid. Harus berupa angka lebih dari 0.\n");
+                }
+            }
+
+            ditemukan = 1;
